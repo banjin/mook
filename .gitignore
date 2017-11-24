@@ -1,0 +1,11 @@
+# OS files #
+.DS_Store
+Thumbs.db
+*.bak
+*.swp
+.idea/
+.Trash/
+
+*.pyc
+*.pyo
+*.so
