@@ -9,4 +9,4 @@ Thumbs.db
 *.pyc
 *.pyo
 *.so
-.venv/
+.venv
