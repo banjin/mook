@@ -11,7 +11,7 @@ class UserProfile(AbstractUser):
 
     nick_name = models.CharField(max_length=50, verbose_name=u'昵称', default='')
     birday = models.DateField(verbose_name=u'生日', null=True, blank=True)
-    gender = models.CharField(max_length=5, choices=(('mail', u'男'), ('female', u'女')), default='female')
+    gender = models.CharField(max_length=8, choices=(('mail', u'男'), ('female', u'女')), default='female')
     address = models.CharField(max_length=100,default=u'')
     mobile = models.CharField(max_length=11,blank=True, null=True)
     # 需要安装Pillow
