@@ -29,8 +29,21 @@
         pip uninstall xadmin
         源码包下载
             https://github.com/sshwsfc/xadmin
-        下载zip文件，解压后将压缩后文件夹xadmin-master下的xadmin文件夹直接拷贝到项目中
+        下载zip文件，解压后将压缩后文件夹xadmin-master下的xadmin文件夹直接拷贝到项目extra_apps中
         将extra_apps文件夹mark Driectory as > source root
+        在settings.py文件中添加
+            sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
+        遇到问题：
+        File "/data/test_django/weeks/Mook/extra_apps/xadmin/__init__.py", line 4, in <module>
+        from xadmin.sites import AdminSite, site
+        File "/data/test_django/weeks/Mook/extra_apps/xadmin/sites.py", line 3, in <module>
+            from future.utils import iteritems
+        ImportError: No module named future.utils
+        解决：
+            pip install future
+            pip install six
+        然后执行python manage.py migrate,产生新的日志文件xadmin_log
+        
         
     
     
