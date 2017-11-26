@@ -46,6 +46,6 @@
         
         
     
-    
+3. 定义login接口时候不要取名login,与django默认的重名
         
         
