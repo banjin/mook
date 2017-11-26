@@ -1,3 +1,4 @@
+# coding:utf8
 """Mook URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -16,7 +17,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.views.generic import TemplateView
 from django.contrib import admin
-from users.views import my_login
+from users.views import my_login,my_logout, LoginView
 import xadmin
 
 urlpatterns = [
@@ -24,5 +25,9 @@ urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
     url('^$', TemplateView.as_view(template_name='index.html'), name='index'),
     # url('^login/$', TemplateView.as_view(template_name='login.html'), name='login'),
-    url(r'login/$', my_login, name='login'),
+    # 基于函数
+    # url(r'login/$', my_login, name='login'),
+    #  基于类
+    url(r'login/$', LoginView.as_view(), name='login'),
+    url(r'logout/$', my_logout, name='logout'),
 ]
