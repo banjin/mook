@@ -55,7 +55,7 @@
         
         地址: https://github.com/mbi/django-simple-captcha
         
-        
+        使用此库时候会在数据库中创建一个数据表
         
         
         
