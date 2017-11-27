@@ -42,6 +42,14 @@ class LoginView(View):
             return render(request, 'login.html', {"login_form": login_form})
 
 
+class RegisterView(View):
+    def get(self,request):
+        return render(request, 'register.html', {})
+
+    def post(self, request):
+        pass
+
+
 def my_login(request):
     if request.method == "POST":
         user_name = request.POST.get('username', "")

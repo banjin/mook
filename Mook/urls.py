@@ -17,7 +17,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.views.generic import TemplateView
 from django.contrib import admin
-from users.views import my_login,my_logout, LoginView
+from users.views import my_login,my_logout, LoginView, RegisterView
 import xadmin
 
 urlpatterns = [
@@ -29,5 +29,6 @@ urlpatterns = [
     # url(r'login/$', my_login, name='login'),
     #  基于类
     url(r'login/$', LoginView.as_view(), name='login'),
+    url(r'register/$', RegisterView.as_view(), name='register'),
     url(r'logout/$', my_logout, name='logout'),
 ]
