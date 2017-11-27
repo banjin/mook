@@ -47,5 +47,15 @@
         
     
 3. 定义login接口时候不要取名login,与django默认的重名
+
+
+4. 图片验证码
+
+        使用django的第三方库 django-simple-captcha.  
+        
+        地址: https://github.com/mbi/django-simple-captcha
+        
+        
+        
         
         
