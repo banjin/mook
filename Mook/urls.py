@@ -17,7 +17,8 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.views.generic import TemplateView
 from django.contrib import admin
-from users.views import my_login,my_logout, LoginView, RegisterView, ActiveUserView
+from users.views import (my_login,my_logout, LoginView, RegisterView,
+                         ActiveUserView, ForgetPwdView,ResetView, ModifyPwdView)
 import xadmin
 
 urlpatterns = [
@@ -32,5 +33,8 @@ urlpatterns = [
     url(r'register/$', RegisterView.as_view(), name='register'),
     url(r'logout/$', my_logout, name='logout'),
     url(r'^captcha/', include('captcha.urls')),
-    url(r'active/(?P<active_code>.*)/%', ActiveUserView.as_view(), name='active')
+    url(r'active/(?P<active_code>.*)/$', ActiveUserView.as_view(), name='active'),
+    url(r'forget/$', ForgetPwdView.as_view(), name='forget_pwd'),
+    url(r'reset/(?P<active_code>.*)/$', ResetView.as_view(), name='reset_pwd'),
+    url(r'modify_pwd/$', ModifyPwdView.as_view(), name='modify_pwd'),
 ]
