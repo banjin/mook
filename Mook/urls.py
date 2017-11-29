@@ -17,7 +17,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.views.generic import TemplateView
 from django.contrib import admin
-from users.views import my_login,my_logout, LoginView, RegisterView
+from users.views import my_login,my_logout, LoginView, RegisterView, ActiveUserView
 import xadmin
 
 urlpatterns = [
@@ -32,4 +32,5 @@ urlpatterns = [
     url(r'register/$', RegisterView.as_view(), name='register'),
     url(r'logout/$', my_logout, name='logout'),
     url(r'^captcha/', include('captcha.urls')),
+    url(r'active/(?P<active_code>.*)/%', ActiveUserView.as_view(), name='active')
 ]

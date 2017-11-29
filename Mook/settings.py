@@ -156,3 +156,5 @@ EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
 EMAIL_FROM = EMAIL_HOST_USER
 
+
+from local_settings import *

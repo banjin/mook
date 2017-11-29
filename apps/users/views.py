@@ -8,7 +8,7 @@ from django.db.models import Q
 # Create your views here.
 from django.views.generic.base import View
 
-from .models import UserProfile
+from .models import UserProfile, EmailVerifyRecord
 from .forms import LoginForm, RegisterForm
 from utils.email_send import send_register_email
 
@@ -36,12 +36,27 @@ class LoginView(View):
             pass_word = request.POST.get("password", "")
             user = authenticate(username=user_name, password=pass_word)
             if user:
-                login(request, user)
-                return render(request, "index.html")
+                if user.is_active:
+                    login(request, user)
+                    return render(request, "index.html")
+                else:
+                    return render(request, 'login.html', {'msg': u'用户未激活'})
             else:
                 return render(request, 'login.html', {'msg': u'用户名和密码错误'})
         else:
             return render(request, 'login.html', {"login_form": login_form})
+
+
+class ActiveUserView(View):
+    def get(self,request, active_code):
+        all_records = EmailVerifyRecord.objects.filter(code=active_code)
+        if all_records:
+            for recode in all_records:
+                email = recode.email
+                user = UserProfile.objects.get(email=email)
+                user.is_active = True
+                user.save()
+        return render(request, 'login.html')
 
 
 class RegisterView(View):
@@ -53,6 +68,8 @@ class RegisterView(View):
         register_form = RegisterForm(request.POST)
         if register_form.is_valid():
             user_name = request.POST.get('email', "")
+            if UserProfile.objects.filter(email=user_name):
+                return render(request, 'register.html', {'register_form': register_form, 'msg': u'用户已经存在'})
             pass_word = request.POST.get("password", "")
             user_profile = UserProfile()
             user_profile.username = user_name
