@@ -10,3 +10,4 @@ Thumbs.db
 *.pyo
 *.so
 venv/
+Mook/local_settings.py

@@ -146,3 +146,13 @@ AUTH_USER_MODEL = 'users.UserProfile'
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
+
+# ----------- 邮件 -------------
+
+EMAIL_HOST = 'smtp.sina.com'
+EMAIL_port= 25
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+EMAIL_FROM = EMAIL_HOST_USER
+

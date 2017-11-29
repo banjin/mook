@@ -10,6 +10,7 @@ from django.views.generic.base import View
 
 from .models import UserProfile
 from .forms import LoginForm, RegisterForm
+from utils.email_send import send_register_email
 
 
 class CustomBackend(ModelBackend):
@@ -46,7 +47,7 @@ class LoginView(View):
 class RegisterView(View):
     def get(self,request):
         register_form = RegisterForm()
-        return render(request, 'register.html', {'register_form':register_form})
+        return render(request, 'register.html', {'register_form': register_form})
 
     def post(self, request):
         register_form = RegisterForm(request.POST)
@@ -56,8 +57,14 @@ class RegisterView(View):
             user_profile = UserProfile()
             user_profile.username = user_name
             user_profile.email = user_name
+            user_profile.is_active = False
             user_profile.password = make_password(pass_word)
             user_profile.save()
+
+            send_register_email(user_name, 'register')
+            return render(request, 'login.html')
+        else:
+            return render(request, 'register.html', {'register_form': register_form})
 
 
 def my_login(request):
