@@ -5,9 +5,9 @@ from .models import CityDict, CourseOrg, Teacher
 
 
 class CityDictAdmin(object):
-    list_display = ('desc', 'name', 'add_time')
-    search_fields = ('desc', 'name')
-    list_filter = ('desc', 'name', 'add_time')
+    list_display = ('name', 'desc', 'add_time')
+    search_fields = ('name', 'desc')
+    list_filter = ('name', 'desc', 'add_time')
 
 
 class CourseOrgAdmin(object):
