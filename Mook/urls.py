@@ -20,8 +20,13 @@ from django.contrib import admin
 from users.views import (my_login, my_logout, LoginView, RegisterView,
                          ActiveUserView, ForgetPwdView,ResetView, ModifyPwdView)
 from organization.views import OrgView
+# from django.conf import settings
+from Mook.settings import MEDIA_ROOT
 
 import xadmin
+# 用于处理静态文件
+
+from django.views.static import serve
 
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
@@ -42,4 +47,7 @@ urlpatterns = [
 
     # 课程机构首页
     url(r'^org_list/$', OrgView.as_view(), name='org_list'),
+    # 配置上传文件的访问处理函数
+    url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
+
 ]

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'captcha',
+    'pure_pagination',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -72,6 +73,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 在模板中可以使用MEDIA_URL找到用户上传的图片
+                'django.core.context_processors.media',
             ],
         },
     },
@@ -156,6 +159,14 @@ EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
 EMAIL_FROM = EMAIL_HOST_USER
+
+# -------------分页-----------------
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 10,
+    'MARGIN_PAGES_DISPLAYED': 2,
+
+    'SHOW_FIRST_PAGE_WHEN_INVALID': True,
+}
 
 
 from local_settings import *
