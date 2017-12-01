@@ -13,6 +13,7 @@ class BaseSetting(object):
 class GlobalSettings(object):
     site_title = "慕学后台管理系统"
     site_footer = "慕课教育网"
+    # 改变应用列表的展现形式
     menu_style = "accordion"
 
 
