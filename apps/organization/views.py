@@ -3,9 +3,10 @@ from django.shortcuts import render
 
 from django.shortcuts import render_to_response
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
-
+from django.http import HttpResponse
 from django.views.generic import View
 from .models import CourseOrg, CityDict
+from .forms import UserAskForm
 
 
 class OrgView(View):
@@ -30,6 +31,13 @@ class OrgView(View):
         category = request.GET.get('ct', '')
         if city_id:
             all_orgs = all_orgs.filter(category=category)
+
+        sort = request.GET.get('sort', '')
+        if sort:
+            if sort == 'students':
+                all_orgs = all_orgs.order_by('students')
+            elif sort == 'courses':
+                all_orgs = all_orgs.order_by('course_nums')
         org_nums = all_orgs.count()
         # 对课程机构进行分页
         try:
@@ -47,5 +55,16 @@ class OrgView(View):
                                                  'org_nums': org_nums,
                                                  'city_id': city_id,
                                                  'category': category,
-                                                 'hot_orgs': hot_orgs})
+                                                 'hot_orgs': hot_orgs,
+                                                 'sort': sort})
 
+
+class AddUserAskView(View):
+    def post(self, request):
+        userask_form = UserAskForm(request.POST)
+        if userask_form.is_valid():
+            user_ask = userask_form.save(commit=True)
+            # 异步操作,返回Json格式，而不是页面
+            return HttpResponse("{'status': 'success'}", content_type='application/json')
+        else:
+            return HttpResponse("{'status': 'fail', 'msg': '添加出错'}", content_type='application/json')
