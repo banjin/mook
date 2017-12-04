@@ -144,6 +144,7 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# 扩展用户模型
 AUTH_USER_MODEL = 'users.UserProfile'
 
 # 自定义认证
