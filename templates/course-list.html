@@ -20,9 +20,9 @@
 			<div class="left layout">
 				<div class="head">
 					<ul class="tab_header">
-						<li class="active"><a href="?sort=">最新 </a></li>
-						<li ><a href="?sort=hot">最热门</a></li>
-						<li ><a href="?sort=students">参与人数</a></li>
+						<li class="{% ifequal sort '' %}active{% endifequal %}"><a href="?sort=">最新 </a></li>
+						<li class="{% ifequal sort 'hot' %}active{% endifequal %}"><a href="?sort=hot">最热门</a></li>
+						<li class="{% ifequal sort 'students' %}active{% endifequal %}"><a href="?sort=students">参与人数</a></li>
 					</ul>
 				</div>
                 <div id="inWindow">
@@ -54,7 +54,7 @@
 
 					</div>
                     <div class="pageturn">
-            <ul class="pagelist">
+                        <ul class="pagelist">
                 {% if all_course.has_previous %}
                     <li class="long"><a href="?{{ all_course.previous_page_number.querystring }}">上一页</a></li>
 
@@ -76,52 +76,26 @@
                 {% endif %}
 
             </ul>
-        </div>
+            </div>
 				</div>
                 </div>
 			</div>
 			<div class="right layout">
 				<div class="head">热门课程推荐</div>
 				<div class="group_recommend">
-
+                    {% for fav_course in fav_courses %}
                     <dl>
 						<dt>
 							<a target="_blank" href="">
-								<img width="240" height="220" class="scrollLoading" src="../media/courses/2016/11/540e57300001d6d906000338-240-135_n0L8vbw.jpg"/>
+								<img width="240" height="220" class="scrollLoading" src="{{ MEDIA_URL }}{{ fav_course.image }}"/>
 							</a>
 						</dt>
 						<dd>
-							<a target="_blank" href=""><h2> django与vuejs实战项目2</h2></a>
-							<span class="fl">难度：<i class="key">高级</i></span>
+							<a target="_blank" href=""><h2>{{ fav_course.name }}</h2></a>
+							<span class="fl">难度：<i class="key">{{ fav_course.get_degree_display }}</i></span>
 						</dd>
 					</dl>
-
-                    <dl>
-						<dt>
-							<a target="_blank" href="">
-								<img width="240" height="220" class="scrollLoading" src="../media/courses/2016/12/python面向对象.jpg"/>
-							</a>
-						</dt>
-						<dd>
-							<a target="_blank" href=""><h2> python面向对象</h2></a>
-							<span class="fl">难度：<i class="key">中级</i></span>
-						</dd>
-					</dl>
-
-                    <dl>
-						<dt>
-							<a target="_blank" href="">
-								<img width="240" height="220" class="scrollLoading" src="../media/courses/2016/12/python文件处理.jpg"/>
-							</a>
-						</dt>
-						<dd>
-							<a target="_blank" href=""><h2> python文件处理</h2></a>
-							<span class="fl">难度：<i class="key">中级</i></span>
-						</dd>
-					</dl>
-
-
-
+                    {% endfor %}
 				</div>
 			</div>
 		</div>
