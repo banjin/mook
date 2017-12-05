@@ -45,8 +45,12 @@ INSTALLED_APPS = [
     'organization',
     'xadmin',
     'crispy_forms',
+    # 图片验证
     'captcha',
+    # 分页
     'pure_pagination',
+    # django-debug-toolbar
+    'debug_toolbar',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -58,6 +62,8 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 ]
 
 ROOT_URLCONF = 'Mook.urls'
@@ -155,7 +161,7 @@ AUTHENTICATION_BACKENDS = (
 # ----------- 邮件 -------------
 
 EMAIL_HOST = 'smtp.sina.com'
-EMAIL_port= 25
+EMAIL_port = 25
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
@@ -169,5 +175,6 @@ PAGINATION_SETTINGS = {
     'SHOW_FIRST_PAGE_WHEN_INVALID': True,
 }
 
+INTERNAL_IPS = ('127.0.0.1',)
 
 from local_settings import *

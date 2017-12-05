@@ -4,4 +4,5 @@ pillow==4.3.0
 xadmin==0.6.1
 django-simple-captcha==0.4.6
 django-pure-pagination==0.3.0
+jango-debug-toolbar==1.9.1
 
