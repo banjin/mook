@@ -2,10 +2,11 @@
 from django.shortcuts import render
 
 from django.views.generic.base import View
-from .models import Course,CourseResource
+from .models import Course,CourseResource, Video
 from django.http import HttpResponse
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
-from operation.models import UserFavorite, CourseComment
+from operation.models import UserFavorite, CourseComment, UserCourse
+from utils.mixin_utils import LoginRequiredMixin
 
 class CourseListView(View):
     """
@@ -68,20 +69,33 @@ class CourseDetailView(View):
                                                       'has_fav_org': has_fav_org})
 
 
-
-class CourseInfoView(View):
+class CourseInfoView(LoginRequiredMixin, View):
     """
     章节信息
     """
     def get(self, request, course_id):
         course = Course.objects.get(pk=int(course_id))
+
+        # 查询用户是否已经关联该课程
+        user_courses = UserCourse.objects.filter(user=request.user,course=course)
+        if not user_courses:
+            user_course = UserCourse(user=request.user,course=course)
+            user_course.save()
+
         lessons = course.lesson_set.all()
+        user_courses = UserCourse.objects.filter(course=course)
+        user_ids = [user_course.user.id for user_course in user_courses]
+        all_user_course = UserCourse.objects.filter(user_id__in=user_ids)
+        course_ids = all_user_course.values_list('id', flat=True)
+        relate_courses = Course.objects.filter(id__in=course_ids).order_by('-click_nums')
         course_resources = CourseResource.objects.filter(course=course)
         return render(request, 'course-video.html', {"course": course,
                                                      "lessons": lessons,
-                                                     "course_resources":course_resources})
+                                                     "course_resources":course_resources,
+                                                     'relate_courses':relate_courses})
 
-class CommentView(View):
+
+class CommentView(LoginRequiredMixin, View):
     """
     课程评论
     """
@@ -117,3 +131,27 @@ class AddCommentView(View):
 
         else:
             return HttpResponse("{'status': 'fail', 'msg': '添加失败'}", content_type='application/json')
+
+
+class VideoPlayView(View):
+    def get(self, request, video_id):
+        video = Video.objects.get(pk=int(video_id))
+        course = video.lesson.course
+        # 查询用户是否已经关联该课程
+        user_courses = UserCourse.objects.filter(user=request.user, course=course)
+        if not user_courses:
+            user_course = UserCourse(user=request.user, course=course)
+            user_course.save()
+
+        lessons = course.lesson_set.all()
+        user_courses = UserCourse.objects.filter(course=course)
+        user_ids = [user_course.user.id for user_course in user_courses]
+        all_user_course = UserCourse.objects.filter(user_id__in=user_ids)
+        course_ids = all_user_course.values_list('id', flat=True)
+        relate_courses = Course.objects.filter(id__in=course_ids).order_by('-click_nums')
+        course_resources = CourseResource.objects.filter(course=course)
+        return render(request, 'course-play.html', {"course": course,
+                                                     "lessons": lessons,
+                                                     "course_resources": course_resources,
+                                                     'relate_courses': relate_courses,
+                                                     'video':video})
