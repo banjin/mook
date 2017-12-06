@@ -19,6 +19,7 @@ class Course(models.Model):
     category = models.CharField(u'课程类别', default=u'培训', max_length=20)
     image = models.ImageField(upload_to="courses/%Y/%m", verbose_name=u"封面图", max_length=100)
     click_nums = models.IntegerField(default=0, verbose_name=u"点击数")
+    tag = models.CharField(u"课程标签", default="", max_length=10)
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
 
     def chapter_num(self):
@@ -44,6 +45,9 @@ class Course(models.Model):
 
 
 class Lesson(models.Model):
+    """
+    章节
+    """
     course = models.ForeignKey(Course, verbose_name=u'课程章节')
     name = models.CharField(max_length=10, verbose_name=u'章节名')
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
