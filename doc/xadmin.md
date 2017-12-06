@@ -16,6 +16,7 @@ pip install -r requirements.txt
 
 
 ![引入xadmin](xadmin-images/1503554-2b98c579cd3cc6a0.png)
+
 为了方便管理，我们创建了django_extra文件夹，与apps一样需要在settings中设置。
     
     import sys
@@ -79,7 +80,7 @@ pip install -r requirements.txt
 
 
 ![站点字体](xadmin-images/1503554-54f6df70d3601f7b.png)
-恩 好看多了！
+
 但是空空如野，我们怎么进行管理呢？
 
 添加管理数据
@@ -97,6 +98,7 @@ pip install -r requirements.txt
 OK，设置完成我们来看一下效果。
 
 ![用户](xadmin-images/1503554-545ebfa1e21c7c6a.png)
+
 跟刚才比我们多了一个，users块，点开看看用户里面有什么。
 
 ![用户信息](xadmin-images/1503554-fe81dd4a3173ba16.png)
@@ -110,6 +112,7 @@ OK，设置完成我们来看一下效果。
 1.我们在apps.py中添加verbose_name = u'你想要的名字'
 
 ![应用](xadmin-images/1503554-734ed2d0fe8643c1.png)
+
 2.我们在__init__.py中添加
 
     default_app_config='users.apps.UsersConfig'
@@ -128,6 +131,7 @@ OK，设置完成我们来看一下效果。
 
 
 ![表头](xadmin-images/1503554-ba09a836eb28a4e3.png)
+
 这两个地方有点奇怪呢，改一下。
 我们在adminx.py中添加下面代码即可。
 
@@ -142,6 +146,7 @@ OK看一下效果。
 
 
 ![修改表头](xadmin-images/1503554-98ca25dc8a8bdc7d.png)
+
 最后一个
 
 
