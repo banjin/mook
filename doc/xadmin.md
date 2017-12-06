@@ -15,8 +15,11 @@ pip install -r requirements.txt
 然后将文件导入到项目中，like this
 
 
-image.png
-为了方便管理，我们创建了django_extra文件夹，与apps一样需要在settings中设置。这里不在重复执行了。
+![引入xadmin](xadmin-images/1503554-2b98c579cd3cc6a0.png)
+为了方便管理，我们创建了django_extra文件夹，与apps一样需要在settings中设置。
+    
+    import sys
+    sys.path.insert(0, os.path.join(BASE_DIR, 'django_extra')
 
 之后的操作源码跟pip操作都是一样的。
 
@@ -30,6 +33,7 @@ image.png
         'crispy_forms',
     ]
 这一步之后只需要再配置一下url就OK了
+    
     import xadmin
     
     urlpatterns = [
@@ -51,19 +55,8 @@ image.png
     migrate
 我们会发现数据中多了4张表。
 
+![数据库表](xadmin-images/1503554-6928c983324d8454.png)
 
-image.png
-OK,运行看一下，这里我们直接访问http://127.0.0.1:8000/xadmin/
-来比较两个有什么区别。
-
-
-xadmin admin center
-
-Django自带admin center
-看起来也没什么变化吗，这只是开始，我们来写简单配置看一下。
-说实话django的文档有点坑。好多都找不到。
-
-散了不指望它了。
 
 配置
 
@@ -85,7 +78,7 @@ Django自带admin center
 看一下效果。
 
 
-image.png
+![站点字体](xadmin-images/1503554-54f6df70d3601f7b.png)
 恩 好看多了！
 但是空空如野，我们怎么进行管理呢？
 
@@ -103,32 +96,27 @@ image.png
     xadmin.site.register(UserProfile, UserProfileAdmin)
 OK，设置完成我们来看一下效果。
 
-image.png
+![用户](xadmin-images/1503554-545ebfa1e21c7c6a.png)
 跟刚才比我们多了一个，users块，点开看看用户里面有什么。
 
+![用户信息](xadmin-images/1503554-fe81dd4a3173ba16.png)
 
-root是不是很眼熟，这就是我们的superuser。我们可以点击去进行管理，数据更改或者权限添加等。
+是不是很眼熟，这就是我们的superuser。我们可以点击去进行管理，数据更改或者权限添加等。
 
 有没有发现用户上面的USERS很不爽，如果是中文就好了。我们来改一下。
 
 修改块头为中文
+
 1.我们在apps.py中添加verbose_name = u'你想要的名字'
 
-image.png
+![应用](xadmin-images/1503554-734ed2d0fe8643c1.png)
 2.我们在__init__.py中添加
 
     default_app_config='users.apps.UsersConfig'
 看一下效果。
 
+![应用标题](xadmin-images/1503554-f5266615b47981f5.png)
 
-image.png
-完美
-
-突然发现这一块好空哦。添加点东西？
-
-
-image.png
-怎么添加呢
 
 添加显示字段
 我们需要来到我们的adminx.py中,将我们定义的xxxAdmin修改成这样
@@ -137,14 +125,9 @@ image.png
         list_display = ['id', 'username', 'email' ]  #添加要显示的列
         search_fields = ['id', 'username', 'email' ]  #要查询的列
         list_filter = ['id', 'username', 'email' ]  #要筛选的列
-看一下效果吧
 
 
-image.png
-看看还有什么不顺眼的地方
-
-
-image.png
+![表头](xadmin-images/1503554-ba09a836eb28a4e3.png)
 这两个地方有点奇怪呢，改一下。
 我们在adminx.py中添加下面代码即可。
 
@@ -158,15 +141,17 @@ image.png
 OK看一下效果。
 
 
-image.png
+![修改表头](xadmin-images/1503554-98ca25dc8a8bdc7d.png)
 最后一个
 
 
 收缩
-可收缩列
+
 只需要在刚才定义的GlobalSetting中添加menu_style = 'accordion'
 
     class GlobalSetting(object):
         site_title = '鲸之网'   #设置头标题
         site_footer = '鲸之网'  #设置脚标题
         menu_style = 'accordion'
+
+![收缩表头](xadmin-images/1503554-467c9ffa39d44d09.png)
