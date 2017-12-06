@@ -29,6 +29,15 @@ class UserMessageAdmin(object):
 
 
 class UserCourseAdmin(object):
+    # def get_name(self, obj):
+    #     return obj.user.username
+    #
+    # get_name.admin_order_field = 'user'  # Allows column order sorting
+    # get_name.short_description = 'User Name'
+    #
+    # list_display = ('get_name', 'course', 'add_time')
+    # search_fields = ('get_name', 'course')
+    # list_filter = ('get_name', 'course', 'add_time')
     list_display = ('user', 'course', 'add_time')
     search_fields = ('user', 'course')
     list_filter = ('user', 'course', 'add_time')
