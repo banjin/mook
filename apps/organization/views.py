@@ -10,6 +10,9 @@ from .forms import UserAskForm
 from courses.models import Course
 from operation.models import UserFavorite
 
+from django.db.models import Q
+
+
 class OrgView(View):
     """
     课程机构列表功能
@@ -17,6 +20,10 @@ class OrgView(View):
     def get(self, request):
         # 课程机构
         all_orgs = CourseOrg.objects.all()
+
+        search_keywords = request.GET.get('keywords', '')
+        if search_keywords:
+            all_orgs = all_orgs.filter(Q(name__icontains=search_keywords) | Q(desc__icontains=search_keywords))
 
         hot_orgs=all_orgs.order_by('-click_num')
 
@@ -184,6 +191,10 @@ class TeacherListView(View):
     """
     def get(self, request):
         all_teachers = Teacher.objects.all()
+        search_keywords = request.GET.get('keywords', '')
+        if search_keywords:
+            all_teachers = all_teachers.filter(name__icontains=search_keywords)
+
         top_teachers = all_teachers.order_by('-click_num')
         teacher_num = all_teachers.count()
         sort = request.GET.get('sort', '')
