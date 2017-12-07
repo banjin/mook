@@ -214,5 +214,21 @@ class TeacherDetailView(View):
     教师详情
     """
     def get(self, request, teacher_id):
-        teacher = Teacher.objects.get(int(teacher_id))
-        return render(request, 'teacher-detail.html', {'teacher': teacher})
+        teacher = Teacher.objects.get(pk=int(teacher_id))
+        teacher.click_num +=1
+        teacher.save()
+        courses = teacher.course_set.all()
+        has_teacher_faved = False
+        if UserFavorite.objects.filter(user=request.user, fav_type=3, fav_id=teacher_id):
+            has_teacher_faved = True
+
+        has_org_faved = False
+        if UserFavorite.objects.filter(user=request.user, fav_type=2, fav_id=teacher.org.id):
+            has_org_faved = True
+
+        teachers = Teacher.objects.all().order_by("-click_num")[:3]
+        return render(request, 'teacher-detail.html', {'teacher': teacher,
+                                                       'courses':courses,
+                                                       'teachers':teachers,
+                                                       'has_teacher_faved':has_teacher_faved,
+                                                       'has_org_faved':has_org_faved})
