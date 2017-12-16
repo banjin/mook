@@ -52,6 +52,9 @@ urlpatterns = [
     # 讲师列表页面
     url(r'^teacher/', include('organization.urls', namespace='org')),
 
+    #用户信息
+    url(r'^user/', include('users.urls', namespace='user')),
+
     # 配置上传文件的访问处理函数
     url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
 

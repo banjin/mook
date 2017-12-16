@@ -13,7 +13,7 @@ class UserProfile(AbstractUser):
     birday = models.DateField(verbose_name=u'生日', null=True, blank=True)
     gender = models.CharField(max_length=8, choices=(('mail', u'男'), ('female', u'女')), default='female')
     address = models.CharField(max_length=100,default=u'')
-    mobile = models.CharField(max_length=11,blank=True, null=True)
+    mobile = models.CharField(max_length=11, blank=True, null=True)
     # 需要安装Pillow
     image = models.ImageField(upload_to="image/%Y/%m", default='images/default.png', max_length=100)
 
@@ -25,11 +25,20 @@ class UserProfile(AbstractUser):
         verbose_name_plural = verbose_name
         db_table = "user_profile"
 
+    def unread_nums(self):
+        """
+        获取用户未读消息
+        :return:
+        """
+        from operation.models import UserMessage
+        return UserMessage.objects.filter(user=self.id, has_read=False).count()
+
 
 class EmailVerifyRecord(models.Model):
     code = models.CharField(max_length=20, verbose_name=u'验证码')
     email = models.EmailField(max_length=50, verbose_name=u'邮箱')
-    send_type = models.CharField(choices=(("register", u"注册"), ('forget', u"找回密码")), max_length=20, verbose_name=u'验证码类型')
+    send_type = models.CharField(choices=(("register", u"注册"), ('forget', u"找回密码"), ('update_email', u"修改邮箱")),
+                                 max_length=20, verbose_name=u'验证码类型')
     send_time = models.DateTimeField(default=datetime.now, verbose_name=u'发送时间')
 
     class Meta:
