@@ -17,11 +17,11 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.views.generic import TemplateView
 from django.contrib import admin
-from users.views import (my_login, my_logout, LoginView, RegisterView,
-                         ActiveUserView, ForgetPwdView,ResetView, ModifyPwdView)
+from users.views import (my_login,LogoutView, my_logout, LoginView, RegisterView,
+                         ActiveUserView, ForgetPwdView,ResetView, ModifyPwdView, IndexView)
 from organization.views import OrgView
 from django.conf import settings
-from Mook.settings import MEDIA_ROOT
+from Mook.settings import MEDIA_ROOT, STATIC_ROOT
 
 import xadmin
 # 用于处理静态文件
@@ -31,12 +31,15 @@ from django.views.static import serve
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
     url(r'^xadmin/', xadmin.site.urls),
-    url('^$', TemplateView.as_view(template_name='index.html'), name='index'),
+    # 静态页面
+    # url('^$', TemplateView.as_view(template_name='index.html'), name='index'),
     # url('^login/$', TemplateView.as_view(template_name='login.html'), name='login'),
     # 基于函数
     # url(r'login/$', my_login, name='login'),
     #  基于类
+    url(r'^$',IndexView.as_view(), name='index'),
     url(r'login/$', LoginView.as_view(), name='login'),
+    url(r'logout/$', LogoutView.as_view(), name='logout'),
     url(r'register/$', RegisterView.as_view(), name='register'),
     url(r'logout/$', my_logout, name='logout'),
     url(r'^captcha/', include('captcha.urls')),
@@ -55,8 +58,10 @@ urlpatterns = [
     #用户信息
     url(r'^user/', include('users.urls', namespace='user')),
 
-    # 配置上传文件的访问处理函数
+    # 配置上传文件的访问处理函数,开发环境时候使用
     url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
+
+    url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT}),
 
 ]
 
@@ -67,3 +72,4 @@ if settings.DEBUG:
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns
 
+handler404 = 'users.views.page_not_found'

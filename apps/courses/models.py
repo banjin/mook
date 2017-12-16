@@ -26,6 +26,7 @@ class Course(models.Model):
     teacher = models.ForeignKey(Teacher, null=True, blank=True, verbose_name=u'讲师')
     youneed_know = models.CharField(u'用户须知', default="", max_length=300)
     teacher_tell = models.CharField(u'老师告诉', default="", max_length=300)
+    is_banner = models.BooleanField(u'广告位', default=False)
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
 
     def chapter_num(self):
