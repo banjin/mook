@@ -180,3 +180,17 @@ PAGINATION_SETTINGS = {
 INTERNAL_IPS = ('127.0.0.1',)
 
 from local_settings import *
+
+# celery settings
+# celery中间人 redis://redis服务所在的ip地址:端口/数据库号
+BROKER_URL = 'redis://localhost:6379/0'
+# celery结果返回，可用于跟踪结果
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+# celery内容等消息的格式设置
+CELERY_ACCEPT_CONTENT = ['application/json', ]
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+# celery时区设置，使用settings中TIME_ZONE同样的时区
+CELERY_TIMEZONE = TIME_ZONE

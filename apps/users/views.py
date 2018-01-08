@@ -296,3 +296,17 @@ def page_not_found(request):
     response = render_to_response('404.html', {})
     response.status_code = 404
     return response
+
+
+# coding:utf-8
+from django.shortcuts import render
+from django.http import HttpResponse
+import json
+from .tasks import send_register
+
+
+def home(request):
+    send_register.delay('baliang616@sina.com')
+
+    data = list(Teacher.objects.values('name'))
+    return HttpResponse(json.dumps(data), content_type='application/json')
