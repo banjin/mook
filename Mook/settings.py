@@ -25,7 +25,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
 SECRET_KEY = 'fs6l5p9^p-_gu82synwg8bd666qegb(4g7rv6m0!ci62%e!unu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -147,10 +147,12 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+# 开发环境使用
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# debug = False 使用(线上环境使用)
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # 扩展用户模型
 AUTH_USER_MODEL = 'users.UserProfile'

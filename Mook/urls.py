@@ -21,7 +21,8 @@ from users.views import (my_login,LogoutView, my_logout, LoginView, RegisterView
                          ActiveUserView, ForgetPwdView,ResetView, ModifyPwdView, IndexView)
 from organization.views import OrgView
 from django.conf import settings
-from Mook.settings import MEDIA_ROOT, STATIC_ROOT
+from Mook.settings import MEDIA_ROOT
+# from Mook.settings import STATIC_ROOT
 
 import xadmin
 # 用于处理静态文件
@@ -61,7 +62,7 @@ urlpatterns = [
     # 配置上传文件的访问处理函数,开发环境时候使用
     url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
 
-    url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT}),
+    # url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT}),
 
 ]
 
